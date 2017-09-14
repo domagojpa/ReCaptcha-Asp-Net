@@ -90,7 +90,7 @@ namespace hbehr.recaptcha
             _configured = true;
             _secretKey = secretKey;
             _captchaDiv = string.Format("<div class='g-recaptcha' data-sitekey='{0}'></div><script src='https://www.google.com/recaptcha/api.js{{0}}'></script>", publicKey);
-            _invisibleCaptchaDiv = string.Format("<button class='g-recaptcha' data-sitekey='{0}' data-callback='{{1}}'>{{2}}</button><script src='https://www.google.com/recaptcha/api.js{{0}}'></script>", publicKey);
+            _invisibleCaptchaDiv = string.Format("<button class='g-recaptcha {{3}}' data-sitekey='{0}' data-callback='{{1}}'>{{2}}</button><script src='https://www.google.com/recaptcha/api.js{{0}}'></script>", publicKey);
         }
 
         private string GetHlCode(ReCaptchaLanguage? language)
@@ -112,10 +112,10 @@ namespace hbehr.recaptcha
             return new HtmlString(string.Format(_captchaDiv, GetHlCode(language)));
         }
 
-        internal IHtmlString GetInvisibleCaptcha(string callback, string buttonText, ReCaptchaLanguage? language)
+        internal IHtmlString GetInvisibleCaptcha(string callback, string buttonText, ReCaptchaLanguage? language, string extraClassNames)
         {
             CheckIfIamConfigured();
-            return new HtmlString(string.Format(_invisibleCaptchaDiv, GetHlCode(language), callback, buttonText));
+            return new HtmlString(string.Format(_invisibleCaptchaDiv, GetHlCode(language), callback, buttonText, extraClassNames));
         }
 
         internal bool ValidateResponse(IReChaptaWebInterface webInterface, string response)
